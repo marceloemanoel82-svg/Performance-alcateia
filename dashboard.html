@@ -13,204 +13,277 @@
     --muted: #9ca3af;
     --border: rgba(255,255,255,0.06);
   }
-
   * {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
-
   body {
     margin: 0;
     min-height: 100vh;
     background: linear-gradient(180deg, #05070b, #0b0f14);
     color: var(--text);
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
-
   .container {
-    max-width: 520px;
-    margin: 0 auto;
     background: var(--card);
     border-radius: 14px;
-    padding: 22px;
+    padding: 24px;
+    width: 100%;
+    max-width: 520px;
     border: 1px solid var(--border);
+    box-shadow: 0 8px 30px rgb(199 162 76 / 0.3);
   }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 18px;
-    font-size: 1.2rem;
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo img {
+    width: 48px;
+    height: auto;
+  }
+  .logo span {
+    font-size: 1rem;
     color: var(--gold);
-    text-align: center;
+    font-weight: 600;
   }
-
+  .vendedor {
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
   label {
     display: block;
-    font-size: 0.75rem;
+    margin-top: 16px;
+    font-size: 0.85rem;
     color: var(--muted);
-    margin-bottom: 6px;
-    margin-top: 14px;
+    user-select: none;
   }
-
   input, select {
     width: 100%;
-    padding: 12px;
+    padding: 12px 14px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: #020617;
     color: var(--text);
-    font-size: 0.9rem;
-    outline: none;
+    font-size: 1rem;
+    outline-offset: 2px;
     transition: border-color 0.3s ease;
   }
-
   input:focus, select:focus {
     border-color: var(--gold);
   }
-
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  @media (max-width: 480px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
   button {
+    margin-top: 24px;
     width: 100%;
-    margin-top: 20px;
-    padding: 13px;
-    border-radius: 10px;
-    border: none;
+    padding: 14px;
     background: var(--gold);
+    border: none;
+    border-radius: 12px;
     color: #020617;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    user-select: none;
   }
-
   button:hover {
     background: #b29432;
   }
-
-  .topbar {
+  .actions {
+    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 10px;
+    gap: 16px;
+    justify-content: center;
     flex-wrap: wrap;
   }
-
-  .topbar button {
-    width: auto;
-    padding: 8px 16px;
+  .actions button {
     background: transparent;
-    border: 1px solid var(--text);
+    border: 1px solid var(--border);
     color: var(--text);
     font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: auto;
+    padding: 10px 24px;
+    border-radius: 12px;
   }
-
-  .topbar button:hover {
+  .actions button:hover {
     background: rgba(199, 162, 76, 0.2);
+  }
+  footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.75rem;
+    color: #6b7280;
+    user-select: none;
   }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="topbar">
-    <div id="vendedorNome"></div>
-    <button id="btnLogout">Logout</button>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png" alt="Logo Equipe Alcateia" />
+        <span>Equipe Alcateia</span>
+      </div>
+      <div class="vendedor" id="vendedorNome"></div>
+    </header>
+
+    <h2>Novo Agendamento</h2>
+
+    <label for="cliente">Nome do cliente</label>
+    <input id="cliente" type="text" autocomplete="off" />
+
+    <label for="telefone">Telefone</label>
+    <input id="telefone" type="tel" inputmode="numeric" autocomplete="off" />
+
+    <label for="bem">Bem desejado</label>
+    <input id="bem" type="text" autocomplete="off" />
+
+    <label for="valor">Valor disponível (R$)</label>
+    <input id="valor" type="number" min="0" step="0.01" inputmode="decimal" autocomplete="off" />
+
+    <div class="row">
+      <div>
+        <label for="data">Data da visita</label>
+        <input id="data" type="date" />
+      </div>
+      <div>
+        <label for="hora">Hora da visita</label>
+        <input id="hora" type="time" />
+      </div>
+    </div>
+
+    <label for="status">Status</label>
+    <select id="status">
+      <option>Pendente</option>
+      <option>Realizado</option>
+      <option>Remarcou</option>
+      <option>Não compareceu</option>
+    </select>
+
+    <button id="btnSalvar">Salvar agendamento</button>
+
+    <div class="actions">
+      <button id="btnListagem">Ir para Listagem</button>
+      <button id="btnLogout">Logout</button>
+    </div>
+
+    <footer>
+      Gestão • Processo • Performance
+    </footer>
   </div>
-
-  <h2>Novo Agendamento</h2>
-
-  <label for="cliente">Cliente</label>
-  <input id="cliente" type="text" autocomplete="off" />
-
-  <label for="telefone">Telefone</label>
-  <input id="telefone" type="tel" autocomplete="off" />
-
-  <label for="bem">Bem desejado</label>
-  <input id="bem" type="text" autocomplete="off" />
-
-  <label for="valor">Valor disponível</label>
-  <input id="valor" type="number" min="0" step="0.01" autocomplete="off" />
-
-  <label for="data">Data da visita</label>
-  <input id="data" type="date" />
-
-  <label for="hora">Hora</label>
-  <input id="hora" type="time" />
-
-  <label for="status">Status</label>
-  <select id="status">
-    <option>Pendente</option>
-    <option>Realizado</option>
-    <option>Remarcou</option>
-    <option>Não compareceu</option>
-  </select>
-
-  <button id="btnSalvar">Salvar agendamento</button>
-
-  <button id="btnListagem" style="margin-top: 15px;">Ir para Listagem</button>
-</div>
 
 <script>
   const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
 
+  // Verifica vendedor logado
   const vendedor = localStorage.getItem("vendedor");
   if (!vendedor) {
+    alert("Você precisa estar logado.");
     window.location.href = "index.html";
   } else {
     document.getElementById("vendedorNome").textContent = "Vendedor: " + vendedor;
   }
 
-  document.getElementById("btnLogout").onclick = () => {
+  // Logout
+  document.getElementById("btnLogout").addEventListener("click", () => {
     localStorage.removeItem("vendedor");
     window.location.href = "index.html";
-  };
+  });
 
-  document.getElementById("btnListagem").onclick = () => {
+  // Navegar para listagem
+  document.getElementById("btnListagem").addEventListener("click", () => {
     window.location.href = "listagem.html";
-  };
+  });
 
-  document.getElementById("btnSalvar").onclick = async () => {
-    const cliente = document.getElementById("cliente").value.trim();
-    const telefone = document.getElementById("telefone").value.trim();
-    const bem = document.getElementById("bem").value.trim();
-    const valor = document.getElementById("valor").value.trim();
-    const data = document.getElementById("data").value;
-    const hora = document.getElementById("hora").value;
-    const status = document.getElementById("status").value;
-
-    if (!cliente || !telefone || !bem || !valor || !data || !hora) {
-      alert("Preencha todos os campos corretamente.");
-      return;
+  // Função para validar campos
+  function validarCampos(dados) {
+    if (!dados.cliente) {
+      alert("Preencha o nome do cliente.");
+      return false;
     }
+    if (!dados.telefone) {
+      alert("Preencha o telefone.");
+      return false;
+    }
+    if (!dados.bem) {
+      alert("Preencha o bem desejado.");
+      return false;
+    }
+    if (!dados.valor || Number(dados.valor) <= 0) {
+      alert("Informe um valor disponível válido.");
+      return false;
+    }
+    if (!dados.data) {
+      alert("Selecione a data da visita.");
+      return false;
+    }
+    if (!dados.hora) {
+      alert("Selecione a hora da visita.");
+      return false;
+    }
+    return true;
+  }
+
+  // Salvar agendamento
+  document.getElementById("btnSalvar").addEventListener("click", async () => {
+    const dados = {
+      vendedor,
+      cliente: document.getElementById("cliente").value.trim(),
+      telefone: document.getElementById("telefone").value.trim(),
+      bem: document.getElementById("bem").value.trim(),
+      valor: document.getElementById("valor").value.trim(),
+      data: document.getElementById("data").value,
+      hora: document.getElementById("hora").value,
+      status: document.getElementById("status").value
+    };
+
+    if (!validarCampos(dados)) return;
 
     try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          vendedor,
-          cliente,
-          telefone,
-          bem,
-          valor,
-          data,
-          hora,
-          status
-        })
+        body: JSON.stringify({ ...dados, acao: "criarAgendamento" })
       });
+
       if (!res.ok) throw new Error("Erro ao salvar agendamento");
+
       alert("Agendamento salvo com sucesso!");
-      // limpar campos
-      document.querySelectorAll("input").forEach(i => i.value = "");
+      // Limpar campos
+      ["cliente","telefone","bem","valor","data","hora"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
       document.getElementById("status").value = "Pendente";
-    } catch (e) {
-      alert("Erro ao salvar, tente novamente.");
-      console.error(e);
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao salvar agendamento. Tente novamente.");
     }
-  };
+  });
 </script>
 
 </body>
