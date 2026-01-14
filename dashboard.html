@@ -5,78 +5,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Novo Agendamento - Equipe Alcateia</title>
 <style>
-  body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-    background: #0b0f14; 
-    color: #e5e7eb; 
-    padding: 20px; 
+  :root {
+    --bg: #0b0f14;
+    --card: #111827;
+    --gold: #c7a24c;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: rgba(255,255,255,0.06);
   }
-  .container { 
-    max-width: 520px; 
-    margin: auto; 
-    background: #111827; 
-    padding: 22px; 
-    border-radius: 14px; 
-    border: 1px solid rgba(255,255,255,0.06); 
+
+  * {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #05070b, #0b0f14);
+    color: var(--text);
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 520px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+
   h2 {
     margin-top: 0;
     margin-bottom: 18px;
     font-size: 1.2rem;
-    color: #c7a24c;
+    color: var(--gold);
     text-align: center;
   }
+
   label {
     display: block;
     font-size: 0.75rem;
-    color: #9ca3af;
+    color: var(--muted);
     margin-bottom: 6px;
     margin-top: 14px;
   }
-  input, select, button {
+
+  input, select {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid var(--border);
     background: #020617;
-    color: #e5e7eb;
+    color: var(--text);
     font-size: 0.9rem;
     outline: none;
+    transition: border-color 0.3s ease;
   }
+
   input:focus, select:focus {
-    border-color: #c7a24c;
+    border-color: var(--gold);
   }
+
   button {
+    width: 100%;
     margin-top: 20px;
-    background: #c7a24c;
+    padding: 13px;
+    border-radius: 10px;
+    border: none;
+    background: var(--gold);
     color: #020617;
     font-weight: 600;
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
     font-size: 0.9rem;
+    cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
   button:hover {
     background: #b29432;
   }
+
   .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
   }
+
   .topbar button {
     width: auto;
     padding: 8px 16px;
     background: transparent;
-    border: 1px solid #e5e7eb;
-    color: #e5e7eb;
+    border: 1px solid var(--text);
+    color: var(--text);
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
   .topbar button:hover {
     background: rgba(199, 162, 76, 0.2);
   }
@@ -139,7 +169,7 @@
   };
 
   document.getElementById("btnListagem").onclick = () => {
-    window.location.href = "listagem.html";  // CORRIGIDO AQUI
+    window.location.href = "listagem.html";
   };
 
   document.getElementById("btnSalvar").onclick = async () => {
