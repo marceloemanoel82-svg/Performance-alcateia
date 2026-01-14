@@ -1,302 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gestão Equipe Alcateia | Listagem</title>
-
-  <style>
-    :root {
-      --bg-gradient: linear-gradient(180deg, #05070b, #0b0f14);
-      --card-bg: #111827;
-      --gold: #c7a24c;
-      --text-light: #e5e7eb;
-      --text-muted: #9ca3af;
-      --border-color: rgba(255,255,255,0.1);
-    }
-
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg-gradient);
-      color: var(--text-light);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 480px;
-      margin-bottom: 20px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo img {
-      width: 42px;
-      height: auto;
-    }
-
-    .logo span {
-      font-size: 1rem;
-      color: var(--gold);
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .vendedor {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .top-actions {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    select, button {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: #020617;
-      color: var(--text-light);
-      font-size: 0.9rem;
-      cursor: pointer;
-      min-width: 140px;
-      transition: background-color 0.3s ease;
-    }
-
-    button {
-      background: var(--gold);
-      color: #020617;
-      border: none;
-      font-weight: 600;
-    }
-
-    button:hover {
-      background: #b29432;
-    }
-
-    button.secondary {
-      background: transparent;
-      color: var(--text-light);
-      border: 1px solid var(--text-light);
-    }
-
-    button.secondary:hover {
-      background: rgba(199, 162, 76, 0.2);
-      color: var(--gold);
-    }
-
-    .lista {
-      display: grid;
-      gap: 14px;
-      width: 100%;
-      max-width: 480px;
-      overflow-y: auto;
-      max-height: 70vh;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 18px 22px;
-      border: 1px solid var(--border-color);
-      display: grid;
-      gap: 10px;
-      word-break: break-word;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      transition: box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 15px 30px rgba(199, 162, 76, 0.5);
-    }
-
-    .linha {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.85rem;
-      flex-wrap: wrap;
-    }
-
-    .linha span {
-      color: var(--text-muted);
-      flex: 1 1 40%;
-      max-width: 40%;
-      user-select: none;
-    }
-
-    .linha strong {
-      color: var(--text-light);
-      font-weight: 600;
-      flex: 1 1 60%;
-      max-width: 60%;
-      word-break: break-word;
-      text-align: right;
-    }
-
-    .status select {
-      width: 100%;
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: #020617;
-      color: var(--text-light);
-      font-size: 0.9rem;
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.3s ease;
-    }
-
-    .status select:hover, .status select:focus {
-      border-color: var(--gold);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 0.75rem;
-      color: #6b7280;
-      user-select: none;
-    }
-
-    /* Mensagem de vazio */
-    .empty {
-      text-align: center;
-      color: var(--text-muted);
-      margin-top: 40px;
-      font-size: 1rem;
-      font-style: italic;
-    }
-
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Novo Agendamento - Equipe Alcateia</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #0b0f14; color: #e5e7eb; padding: 20px; }
+  .container { max-width: 480px; margin: auto; background: #111827; padding: 20px; border-radius: 12px; }
+  label { display:block; margin-top: 10px; color:#9ca3af; }
+  input, select, button { width: 100%; margin-top: 6px; padding: 10px; border-radius: 8px; border:none; background:#020617; color:#e5e7eb; }
+  button { background: #c7a24c; color:#020617; font-weight: 700; cursor:pointer; margin-top: 20px; }
+  button:hover { background: #b29432; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; }
+  .topbar button { width: auto; padding: 8px 16px; background: transparent; border: 1px solid #e5e7eb; color: #e5e7eb; font-weight: 600; }
+  .topbar button:hover { background: rgba(199, 162, 76, 0.2); }
+</style>
 </head>
-
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png" alt="Logo Alcateia" />
-      <span>Equipe Alcateia</span>
-    </div>
-    <div class="vendedor" id="vendedorNome"></div>
-  </header>
-
-  <div class="top-actions">
-    <select id="filtroStatus" onchange="carregar()">
-      <option value="">Todos status</option>
-      <option>Pendente</option>
-      <option>Realizado</option>
-      <option>Remarcou</option>
-      <option>Não compareceu</option>
-    </select>
-
-    <button class="secondary" onclick="location.href='dashboard.html'">Voltar ao dashboard</button>
+<div class="container">
+  <div class="topbar">
+    <div id="vendedorNome"></div>
+    <button id="btnLogout">Logout</button>
   </div>
 
-  <div class="lista" id="lista">Carregando...</div>
+  <h2>Novo Agendamento</h2>
 
-  <footer>
-    Gestão • Processo • Performance
-  </footer>
+  <label for="cliente">Cliente</label>
+  <input id="cliente" type="text" autocomplete="off" />
+
+  <label for="telefone">Telefone</label>
+  <input id="telefone" type="tel" autocomplete="off" />
+
+  <label for="bem">Bem desejado</label>
+  <input id="bem" type="text" autocomplete="off" />
+
+  <label for="valor">Valor disponível</label>
+  <input id="valor" type="number" min="0" step="0.01" autocomplete="off" />
+
+  <label for="data">Data da visita</label>
+  <input id="data" type="date" />
+
+  <label for="hora">Hora</label>
+  <input id="hora" type="time" />
+
+  <label for="status">Status</label>
+  <select id="status">
+    <option>Pendente</option>
+    <option>Realizado</option>
+    <option>Remarcou</option>
+    <option>Não compareceu</option>
+  </select>
+
+  <button id="btnSalvar">Salvar agendamento</button>
+
+  <button id="btnListagem" style="margin-top: 15px;">Ir para Listagem</button>
+</div>
 
 <script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
+
   const vendedor = localStorage.getItem("vendedor");
   if (!vendedor) {
     window.location.href = "index.html";
+  } else {
+    document.getElementById("vendedorNome").textContent = "Vendedor: " + vendedor;
   }
-  document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
+  document.getElementById("btnLogout").onclick = () => {
+    localStorage.removeItem("vendedor");
+    window.location.href = "index.html";
+  };
 
-  async function carregar() {
-    const statusFiltro = document.getElementById("filtroStatus").value.toLowerCase();
-    const lista = document.getElementById("lista");
-    lista.innerHTML = "Carregando...";
+  document.getElementById("btnListagem").onclick = () => {
+    window.location.href = "lista.html";
+  };
 
-    try {
-      const res = await fetch(API_URL);
-      if (!res.ok) throw new Error("Erro ao buscar agendamentos");
-      const dados = await res.json();
+  document.getElementById("btnSalvar").onclick = async () => {
+    const cliente = document.getElementById("cliente").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const bem = document.getElementById("bem").value.trim();
+    const valor = document.getElementById("valor").value.trim();
+    const data = document.getElementById("data").value;
+    const hora = document.getElementById("hora").value;
+    const status = document.getElementById("status").value;
 
-      // Filtra por status (case insensitive)
-      const filtrados = dados.filter(item => {
-        if (!statusFiltro) return true;
-        return item.status.toLowerCase() === statusFiltro;
-      });
-
-      lista.innerHTML = "";
-
-      if (filtrados.length === 0) {
-        lista.innerHTML = `<div class="empty">Nenhum agendamento encontrado para o status selecionado.</div>`;
-        return;
-      }
-
-      filtrados.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-          <div class="linha"><span>Cliente</span><strong>${item.cliente}</strong></div>
-          <div class="linha"><span>Telefone</span><strong>${item.telefone}</strong></div>
-          <div class="linha"><span>Bem</span><strong>${item.bem}</strong></div>
-          <div class="linha"><span>Valor</span><strong>${item.valor}</strong></div>
-          <div class="linha"><span>Data</span><strong>${item.data} ${item.hora}</strong></div>
-          <div class="linha"><span>Vendedor</span><strong>${item.vendedor}</strong></div>
-
-          <div class="status">
-            <select onchange="atualizarStatus('${item.id}', this.value)">
-              <option ${item.status.toLowerCase() === "pendente" ? "selected" : ""}>Pendente</option>
-              <option ${item.status.toLowerCase() === "realizado" ? "selected" : ""}>Realizado</option>
-              <option ${item.status.toLowerCase() === "remarcou" ? "selected" : ""}>Remarcou</option>
-              <option ${item.status.toLowerCase() === "não compareceu" ? "selected" : ""}>Não compareceu</option>
-            </select>
-          </div>
-        `;
-        lista.appendChild(card);
-      });
-    } catch (err) {
-      lista.innerHTML = `<div class="empty">Erro ao carregar os agendamentos.</div>`;
-      console.error(err);
+    if(!cliente || !telefone || !bem || !valor || !data || !hora) {
+      alert("Preencha todos os campos corretamente.");
+      return;
     }
-  }
 
-  async function atualizarStatus(id, status) {
     try {
-      await fetch(API_URL, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ acao: "atualizarStatus", id, status })
+        body: JSON.stringify({
+          vendedor,
+          cliente,
+          telefone,
+          bem,
+          valor,
+          data,
+          hora,
+          status
+        })
       });
-    } catch (err) {
-      console.error("Erro ao atualizar status:", err);
+      if (!res.ok) throw new Error("Erro ao salvar agendamento");
+      alert("Agendamento salvo com sucesso!");
+      // limpar campos
+      document.querySelectorAll("input").forEach(i => i.value = "");
+      document.getElementById("status").value = "Pendente";
+    } catch (e) {
+      alert("Erro ao salvar, tente novamente.");
+      console.error(e);
     }
-  }
-
-  carregar();
+  };
 </script>
 
 </body>
