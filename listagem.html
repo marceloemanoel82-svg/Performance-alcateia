@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gestão Equipe Alcateia | Listagem</title>
+  <title>Listagem - Equipe Alcateia</title>
 
   <style>
     :root {
@@ -74,16 +74,16 @@
       background: #020617;
       color: var(--text);
       font-size: 0.85rem;
-      min-width: 120px;
+      min-width: 140px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button {
-      cursor: pointer;
       background: var(--gold);
       color: #020617;
       border: none;
       font-weight: 600;
-      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -94,6 +94,10 @@
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
+    }
+
+    button.secondary:hover {
+      background: rgba(199, 162, 76, 0.2);
     }
 
     .lista {
@@ -175,9 +179,9 @@
       <option>Não compareceu</option>
     </select>
 
-    <button class="secondary" onclick="location.href='painel.html'">
-      Voltar ao painel
-    </button>
+    <button class="secondary" id="btnNovoAgendamento">Novo Agendamento</button>
+    <button class="secondary" id="btnPainel">Voltar ao Painel</button>
+    <button class="secondary" id="btnLogout">Logout</button>
   </div>
 
   <div class="lista" id="lista"></div>
@@ -187,35 +191,50 @@
   </footer>
 
 <script>
-  const vendedor = localStorage.getItem("vendedor");
-  if (!vendedor) location.href = "index.html";
-  document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
-
   const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
+
+  const vendedor = localStorage.getItem("vendedor");
+  if (!vendedor) {
+    window.location.href = "index.html";
+  } else {
+    document.getElementById("vendedorNome").textContent = "Vendedor: " + vendedor;
+  }
+
+  document.getElementById("btnNovoAgendamento").onclick = () => {
+    window.location.href = "dashboard.html"; // Ou "novo-agendamento.html" se preferir renomear
+  };
+
+  document.getElementById("btnPainel").onclick = () => {
+    window.location.href = "dashboard.html"; // Ajuste se tiver página painel diferente
+  };
+
+  document.getElementById("btnLogout").onclick = () => {
+    localStorage.removeItem("vendedor");
+    window.location.href = "index.html";
+  };
 
   async function carregar() {
     const statusFiltro = document.getElementById("filtroStatus").value.toLowerCase();
     const lista = document.getElementById("lista");
-    lista.innerHTML = `<div style="color: var(--muted); font-style: italic; text-align:center; padding:20px;">Carregando agendamentos...</div>`;
+    lista.innerHTML = "Carregando...";
 
     try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error("Erro ao buscar agendamentos");
       const dados = await res.json();
 
-      // Filtra por status e vendedor logado
+      // Filtra por status (case insensitive)
       const filtrados = dados.filter(item => {
-        if (statusFiltro && item.status.toLowerCase() !== statusFiltro) return false;
-        if (item.vendedor !== vendedor) return false; // filtra só os do vendedor
-        return true;
+        if (!statusFiltro) return true;
+        return item.status.toLowerCase() === statusFiltro;
       });
+
+      lista.innerHTML = "";
 
       if (filtrados.length === 0) {
         lista.innerHTML = `<div class="empty">Nenhum agendamento encontrado para o status selecionado.</div>`;
         return;
       }
-
-      lista.innerHTML = "";
 
       filtrados.forEach(item => {
         const card = document.createElement("div");
@@ -248,16 +267,16 @@
 
   async function atualizarStatus(id, status) {
     try {
-      const res = await fetch(API_URL, {
+      await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ acao: "atualizarStatus", id, status })
       });
-      if (!res.ok) throw new Error("Falha ao atualizar status");
-      // Opcional: mostrar confirmação de sucesso
+      // Atualiza lista após mudança para refletir status novo
+      carregar();
     } catch (err) {
-      alert("Erro ao atualizar status, tente novamente.");
       console.error("Erro ao atualizar status:", err);
+      alert("Erro ao atualizar status.");
     }
   }
 
@@ -265,4 +284,4 @@
 </script>
 
 </body>
-      </html>
+</html>
