@@ -196,25 +196,26 @@
   async function carregar() {
     const statusFiltro = document.getElementById("filtroStatus").value.toLowerCase();
     const lista = document.getElementById("lista");
-    lista.innerHTML = "Carregando...";
+    lista.innerHTML = `<div style="color: var(--muted); font-style: italic; text-align:center; padding:20px;">Carregando agendamentos...</div>`;
 
     try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error("Erro ao buscar agendamentos");
       const dados = await res.json();
 
-      // Filtra por status (case insensitive)
+      // Filtra por status e vendedor logado
       const filtrados = dados.filter(item => {
-        if (!statusFiltro) return true;
-        return item.status.toLowerCase() === statusFiltro;
+        if (statusFiltro && item.status.toLowerCase() !== statusFiltro) return false;
+        if (item.vendedor !== vendedor) return false; // filtra só os do vendedor
+        return true;
       });
-
-      lista.innerHTML = "";
 
       if (filtrados.length === 0) {
         lista.innerHTML = `<div class="empty">Nenhum agendamento encontrado para o status selecionado.</div>`;
         return;
       }
+
+      lista.innerHTML = "";
 
       filtrados.forEach(item => {
         const card = document.createElement("div");
@@ -247,12 +248,15 @@
 
   async function atualizarStatus(id, status) {
     try {
-      await fetch(API_URL, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ acao: "atualizarStatus", id, status })
       });
+      if (!res.ok) throw new Error("Falha ao atualizar status");
+      // Opcional: mostrar confirmação de sucesso
     } catch (err) {
+      alert("Erro ao atualizar status, tente novamente.");
       console.error("Erro ao atualizar status:", err);
     }
   }
@@ -261,4 +265,4 @@
 </script>
 
 </body>
-</html>
+      </html>
