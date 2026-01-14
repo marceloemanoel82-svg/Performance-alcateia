@@ -1,201 +1,167 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gestão Equipe Alcateia | Agendamento</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard - Equipe Alcateia</title>
 
-  <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #111827;
-      --gold: #c7a24c;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-    }
+<style>
+  :root {
+    --bg-gradient: linear-gradient(180deg, #05070b, #0b0f14);
+    --card-bg: #111827;
+    --gold: #c7a24c;
+    --text-light: #e5e7eb;
+    --text-muted: #9ca3af;
+    --border-color: rgba(255,255,255,0.1);
+  }
 
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+  * {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #05070b, #0b0f14);
-      color: var(--text);
-      padding: 20px;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    color: var(--text-light);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  .container {
+    background: var(--card-bg);
+    max-width: 480px;
+    width: 100%;
+    border-radius: 14px;
+    padding: 28px 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 
-    .logo img {
-      width: 46px;
-      height: auto;
-    }
+  .topbar #vendedorNome {
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 1rem;
+  }
 
-    .logo span {
-      font-size: 0.9rem;
-      color: var(--gold);
-      font-weight: 600;
-    }
+  .topbar button {
+    background: transparent;
+    border: 1px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
-    .vendedor {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+  .topbar button:hover {
+    background: rgba(199, 162, 76, 0.2);
+  }
 
-    .container {
-      max-width: 520px;
-      margin: 0 auto;
-      background: var(--card);
-      border-radius: 14px;
-      padding: 22px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
+  h2 {
+    color: var(--gold);
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 18px;
-      font-size: 1.2rem;
-      color: var(--gold);
-      text-align: center;
-    }
+  label {
+    display: block;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    user-select: none;
+  }
 
-    label {
-      display: block;
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      margin-top: 14px;
-    }
+  input, select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: #020617;
+    color: var(--text-light);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
 
-    input, select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: #020617;
-      color: var(--text);
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
+  input:focus, select:focus {
+    border-color: var(--gold);
+  }
 
-    input:focus, select:focus {
-      border-color: var(--gold);
-    }
+  button#btnSalvar, button#btnListagem {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: var(--gold);
+    color: #020617;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+  button#btnSalvar:hover, button#btnListagem:hover {
+    background: #b29432;
+  }
 
-    @media (max-width: 480px) {
-      .row {
-        grid-template-columns: 1fr;
-      }
-    }
+  button#btnListagem {
+    background: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--text-light);
+    margin-top: 12px;
+  }
 
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 13px;
-      border-radius: 10px;
-      border: none;
-      background: var(--gold);
-      color: #020617;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background: #b29432;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .secondary {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: var(--text);
-      width: auto;
-      padding: 10px 20px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .secondary:hover {
-      background: rgba(199, 162, 76, 0.2);
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 0.7rem;
-      color: #6b7280;
-    }
-  </style>
+  button#btnListagem:hover {
+    background: rgba(199, 162, 76, 0.2);
+    color: var(--gold);
+  }
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="logo">
-      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png" alt="Logo Equipe Alcateia" />
-      <span>Equipe Alcateia</span>
-    </div>
-    <div class="vendedor" id="vendedorNome"></div>
-  </header>
-
   <div class="container">
+    <div class="topbar">
+      <div id="vendedorNome"></div>
+      <button id="btnLogout">Logout</button>
+    </div>
+
     <h2>Novo Agendamento</h2>
 
-    <label for="cliente">Nome do cliente</label>
+    <label for="cliente">Cliente</label>
     <input id="cliente" type="text" autocomplete="off" />
 
     <label for="telefone">Telefone</label>
-    <input id="telefone" type="tel" inputmode="numeric" autocomplete="off" />
+    <input id="telefone" type="tel" autocomplete="off" />
 
     <label for="bem">Bem desejado</label>
     <input id="bem" type="text" autocomplete="off" />
 
     <label for="valor">Valor disponível</label>
-    <input id="valor" type="number" min="0" step="0.01" inputmode="decimal" autocomplete="off" />
+    <input id="valor" type="number" min="0" step="0.01" autocomplete="off" />
 
-    <div class="row">
-      <div>
-        <label for="data">Data da visita</label>
-        <input id="data" type="date" />
-      </div>
-      <div>
-        <label for="hora">Hora</label>
-        <input id="hora" type="time" />
-      </div>
-    </div>
+    <label for="data">Data da visita</label>
+    <input id="data" type="date" />
+
+    <label for="hora">Hora</label>
+    <input id="hora" type="time" />
 
     <label for="status">Status</label>
     <select id="status">
@@ -205,98 +171,70 @@
       <option>Não compareceu</option>
     </select>
 
-    <button onclick="salvar()">Salvar agendamento</button>
+    <button id="btnSalvar">Salvar agendamento</button>
 
-    <div class="actions">
-      <button class="secondary" onclick="location.href='lista.html'">Listagem</button>
-      <button class="secondary" onclick="location.href='dashboard.html'">Dashboard</button>
-    </div>
-
-    <footer>
-      Gestão • Processo • Performance
-    </footer>
+    <button id="btnListagem">Ir para Listagem</button>
   </div>
 
-  <script>
-    const vendedor = localStorage.getItem("vendedor");
-    if (!vendedor) {
-      alert("Você precisa estar logado.");
-      window.location.href = "index.html";
-    } else {
-      document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
+
+  const vendedor = localStorage.getItem("vendedor");
+  if (!vendedor) {
+    window.location.href = "index.html";
+  } else {
+    document.getElementById("vendedorNome").textContent = "Vendedor: " + vendedor;
+  }
+
+  document.getElementById("btnLogout").onclick = () => {
+    localStorage.removeItem("vendedor");
+    window.location.href = "index.html";
+  };
+
+  document.getElementById("btnListagem").onclick = () => {
+    window.location.href = "lista.html";
+  };
+
+  document.getElementById("btnSalvar").onclick = async () => {
+    const cliente = document.getElementById("cliente").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const bem = document.getElementById("bem").value.trim();
+    const valor = document.getElementById("valor").value.trim();
+    const data = document.getElementById("data").value;
+    const hora = document.getElementById("hora").value;
+    const status = document.getElementById("status").value;
+
+    if(!cliente || !telefone || !bem || !valor || !data || !hora) {
+      alert("Preencha todos os campos corretamente.");
+      return;
     }
 
-    const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
-
-    function validarCampos(dados) {
-      if (!dados.cliente.trim()) {
-        alert("Preencha o nome do cliente.");
-        return false;
-      }
-      if (!dados.telefone.trim()) {
-        alert("Preencha o telefone.");
-        return false;
-      }
-      if (!dados.bem.trim()) {
-        alert("Preencha o bem desejado.");
-        return false;
-      }
-      if (!dados.valor || Number(dados.valor) <= 0) {
-        alert("Informe um valor disponível válido.");
-        return false;
-      }
-      if (!dados.data) {
-        alert("Selecione a data da visita.");
-        return false;
-      }
-      if (!dados.hora) {
-        alert("Selecione a hora da visita.");
-        return false;
-      }
-      return true;
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          vendedor,
+          cliente,
+          telefone,
+          bem,
+          valor,
+          data,
+          hora,
+          status
+        })
+      });
+      if (!res.ok) throw new Error("Erro ao salvar agendamento");
+      alert("Agendamento salvo com sucesso!");
+      // limpar campos
+      document.querySelectorAll("input").forEach(i => i.value = "");
+      document.getElementById("status").value = "Pendente";
+    } catch (e) {
+      alert("Erro ao salvar, tente novamente.");
+      console.error(e);
     }
-
-    async function salvar() {
-      const dados = {
-        acao: "criarAgendamento",
-        vendedor,
-        cliente: document.getElementById("cliente").value.trim(),
-        telefone: document.getElementById("telefone").value.trim(),
-        bem: document.getElementById("bem").value.trim(),
-        valor: document.getElementById("valor").value.trim(),
-        data: document.getElementById("data").value,
-        hora: document.getElementById("hora").value,
-        status: document.getElementById("status").value
-      };
-
-      if (!validarCampos(dados)) return;
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(dados)
-        });
-
-        if (!res.ok) throw new Error("Erro ao salvar agendamento");
-
-        const json = await res.json();
-        if (json.sucesso) {
-          alert("Agendamento salvo com sucesso!");
-          // Limpar campos após salvar
-          document.querySelectorAll("input").forEach(i => i.value = "");
-          document.getElementById("status").value = "Pendente";
-        } else {
-          alert("Erro ao salvar o agendamento. Tente novamente.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Erro ao salvar o agendamento. Tente novamente.");
-      }
-    }
-  </script>
+  };
+</script>
 
 </body>
-      </html>
+</html>
