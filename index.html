@@ -1,161 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestão Equipe Alcateia | Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Performance Alcateia | Login</title>
 
-  <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #111827;
-      --gold: #c7a24c;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #05070b, #0b0f14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: var(--text);
-    }
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #111;
+  border-radius: 16px;
+  padding: 30px 25px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
 
-    .box {
-      width: 100%;
-      max-width: 360px;
-      background: var(--card);
-      border-radius: 14px;
-      padding: 28px 24px 32px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
+.logo {
+  width: 130px;
+  max-width: 100%;
+  margin-bottom: 15px;
+}
 
-    .logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
 
-    .logo img {
-      width: 80px;
-      height: auto;
-    }
+.frase {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 25px;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 1.25rem;
-      margin: 0 0 6px;
-      color: var(--gold);
-      word-break: break-word;
-    }
+select, input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
 
-    .subtitle {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 18px;
-    }
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: #f5c16c;
+  color: #000;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-    .quote {
-      font-size: 0.85rem;
-      color: #d1d5db;
-      line-height: 1.45;
-      border-left: 2px solid var(--gold);
-      padding-left: 12px;
-      margin-bottom: 22px;
-    }
+button:hover {
+  background: #e0aa4f;
+}
 
-    label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-      display: block;
-    }
+.add {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #aaa;
+  cursor: pointer;
+}
 
-    input {
-      width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: #020617;
-      color: var(--text);
-      font-size: 0.9rem;
-      outline: none;
-    }
+.add:hover {
+  color: #fff;
+}
 
-    input:focus {
-      border-color: var(--gold);
-    }
+.hidden {
+  display: none;
+}
 
-    button {
-      width: 100%;
-      margin-top: 18px;
-      padding: 13px;
-      border-radius: 10px;
-      border: none;
-      background: var(--gold);
-      color: #020617;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 0.7rem;
-      color: #6b7280;
-    }
-  </style>
+.error {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #ff6b6b;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="box">
+<div class="card">
+  <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/main/file_000000001c0071f581dfe6e2b4a25dd8.png" class="logo">
 
-    <div class="logo">
-      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png" alt="Logo Alcateia">
-    </div>
-
-    <h1>Gestão Equipe Alcateia</h1>
-    <div class="subtitle">Acesso do vendedor</div>
-
-    <div class="quote">
-      “A única coisa que separa você do seu objetivo é a história que você continua contando para si mesmo.”
-      <br>— Jordan Belfort
-    </div>
-
-    <label for="nome">Nome do vendedor</label>
-    <input id="nome" type="text" placeholder="Digite seu nome">
-
-    <button onclick="entrar()">Entrar</button>
-
-    <footer>
-      Liderança • Processo • Resultado
-    </footer>
-
+  <h1>Performance Alcateia</h1>
+  <div class="frase">
+    “Se você quer vencer, pare de pedir permissão.”
   </div>
 
-  <script>
-    function entrar() {
-      const nome = document.getElementById("nome").value.trim();
-      if (!nome) {
-        alert("Informe seu nome para entrar.");
-        return;
-      }
-      localStorage.setItem("vendedor", nome);
-      window.location.href = "agenda.html";
-    }
-  </script>
+  <select id="vendedor">
+    <option value="">Selecione seu nome</option>
+  </select>
+
+  <button onclick="login()">Entrar</button>
+
+  <div class="add" onclick="toggleAdd()">+ adicionar vendedor</div>
+
+  <div id="addBox" class="hidden">
+    <input id="novoVendedor" placeholder="Nome do vendedor">
+    <button onclick="adicionarVendedor()">Salvar</button>
+  </div>
+
+  <div id="erro" class="error"></div>
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbw3NX2xH1bziP7ESwrN4Gf3gDWWhAtO1nv0yKC2Cl08IvZl8yIB1kygw8nCsg6li1XYYA/exec";
+
+async function carregarVendedores() {
+  const res = await fetch(API + "?acao=listarVendedores");
+  const data = await res.json();
+
+  const select = document.getElementById("vendedor");
+  data.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    select.appendChild(opt);
+  });
+}
+
+function login() {
+  const vendedor = document.getElementById("vendedor").value;
+  if (!vendedor) {
+    document.getElementById("erro").textContent = "Selecione seu nome.";
+    return;
+  }
+  localStorage.setItem("vendedor", vendedor);
+  window.location.href = "painel.html";
+}
+
+function toggleAdd() {
+  document.getElementById("addBox").classList.toggle("hidden");
+}
+
+async function adicionarVendedor() {
+  const nome = document.getElementById("novoVendedor").value.trim();
+  if (!nome) return;
+
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      acao: "adicionarVendedor",
+      nome
+    })
+  });
+
+  location.reload();
+}
+
+carregarVendedores();
+</script>
 
 </body>
 </html>
