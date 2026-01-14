@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão Equipe Alcateia | Login</title>
 
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #121826;
+      --primary: #c9a24d;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #111827, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: var(--text);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #121826, #0b1220);
+      border-radius: var(--radius);
+      padding: 28px 24px 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,.6);
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .logo img {
+      width: 96px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.4rem;
+      margin: 10px 0 4px;
+      color: var(--primary);
+      word-break: break-word;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .quote {
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--primary);
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      color: #d1d5db;
+      margin-bottom: 22px;
+      line-height: 1.4;
+      border-radius: 8px;
+      word-wrap: break-word;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #020617;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #6b7280;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #e0b45a, #b8913d);
+      color: #020617;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(201,162,77,.35);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      
+      <div class="logo">
+        <img src="https://drive.google.com/uc?export=view&id=1wgzbiPzvuc0-jxGO1diNwoTraIkUDIlz" alt="Logo Alcateia">
+      </div>
+
+      <h1>Gestão Equipe Alcateia</h1>
+      <div class="subtitle">Acesso da equipe</div>
+
+      <div class="quote">
+        “Não existe sorte no mercado. Existe decisão, disciplina e fome de vencer.”
+        <br>— Inspiração Lobo de Wall Street
+      </div>
+
+      <label for="nome">Nome do vendedor</label>
+      <input id="nome" type="text" placeholder="Ex: Marcelo ou Karla" />
+
+      <button onclick="login()">Entrar</button>
+
+      <div class="footer">
+        © Alcateia • Liderança & Resultado
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const nome = document.getElementById("nome").value.trim();
+
+      if (!nome) {
+        alert("Informe seu nome para entrar.");
+        return;
+      }
+
+      localStorage.setItem("vendedor", nome);
+      window.location.href = "agenda.html";
+    }
+  </script>
+</body>
+  </html>
