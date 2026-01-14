@@ -92,6 +92,7 @@
       color: var(--text);
       font-size: 0.9rem;
       outline: none;
+      transition: border-color 0.3s ease;
     }
 
     input:focus, select:focus {
@@ -225,7 +226,6 @@
       document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
     }
 
-    // Coloque aqui seu link do Apps Script
     const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
 
     function validarCampos(dados) {
@@ -258,6 +258,7 @@
 
     async function salvar() {
       const dados = {
+        acao: "criarAgendamento",
         vendedor,
         cliente: document.getElementById("cliente").value.trim(),
         telefone: document.getElementById("telefone").value.trim(),
@@ -281,10 +282,15 @@
 
         if (!res.ok) throw new Error("Erro ao salvar agendamento");
 
-        alert("Agendamento salvo com sucesso!");
-        // Limpar campos
-        document.querySelectorAll("input").forEach(i => i.value = "");
-        document.getElementById("status").value = "Pendente";
+        const json = await res.json();
+        if (json.sucesso) {
+          alert("Agendamento salvo com sucesso!");
+          // Limpar campos após salvar
+          document.querySelectorAll("input").forEach(i => i.value = "");
+          document.getElementById("status").value = "Pendente";
+        } else {
+          alert("Erro ao salvar o agendamento. Tente novamente.");
+        }
       } catch (err) {
         console.error(err);
         alert("Erro ao salvar o agendamento. Tente novamente.");
