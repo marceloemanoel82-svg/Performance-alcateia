@@ -2,228 +2,98 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Performance Alcateia | Login</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - Equipe Alcateia</title>
 <style>
-  * {
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #121619, #1f2a34, #263238);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    color: #e0e0e0;
-  }
-
-  .card {
-    width: 100%;
-    max-width: 420px;
-    background: #1c262c;
-    border-radius: 20px;
-    padding: 40px 35px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-  }
-  .card:hover {
-    box-shadow: 0 25px 40px rgba(245, 193, 108, 0.6);
-  }
-
-  .logo {
-    width: 130px;
-    max-width: 100%;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 4px #f5c16c);
-  }
-
-  h1 {
-    font-size: 1.7rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #f5c16c;
-    text-shadow: 1px 1px 3px #a6733f;
-  }
-
-  .frase {
-    font-size: 1rem;
-    color: #b0b0b0;
-    margin-bottom: 30px;
-    font-style: italic;
-  }
-
-  select, input {
-    width: 100%;
-    padding: 15px 14px;
-    border-radius: 10px;
-    border: 1.5px solid #3e4c56;
-    background-color: #263238;
-    color: #e0e0e0;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: border-color 0.3s ease;
-  }
-
-  select:focus, input:focus {
-    border-color: #f5c16c;
-    outline: none;
-    box-shadow: 0 0 8px #f5c16c;
-    background-color: #2f3a44;
-  }
-
-  button {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: none;
-    background: #f5c16c;
-    color: #222;
-    font-weight: 700;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 5px 10px rgba(245, 193, 108, 0.7);
-  }
-
-  button:hover {
-    background-color: #d9a83b;
-    box-shadow: 0 8px 15px rgba(217, 168, 59, 0.8);
-  }
-
-  .add {
-    margin-top: 15px;
-    font-size: 0.85rem;
-    color: #9ea7ad;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-
-  .add:hover {
-    color: #f5c16c;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  .error {
-    margin-top: 12px;
-    font-size: 0.9rem;
-    color: #ff6b6b;
-    font-weight: 600;
-    text-shadow: 0 0 4px #b33a3a;
-  }
+  body { font-family: Arial, sans-serif; background: #0b0f14; color: #e5e7eb; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; margin:0; }
+  .container { background: #111827; padding:20px; border-radius:10px; width:320px; }
+  select, input, button { width:100%; margin:8px 0; padding:10px; border-radius:8px; border:none; }
+  button { background:#c7a24c; color:#020617; font-weight:600; cursor:pointer; }
+  button:hover { background:#b29432; }
+  .small { font-size:0.85rem; color:#9ca3af; cursor:pointer; text-align:center; margin-top:12px; }
 </style>
 </head>
-
 <body>
 
-<div class="card">
-  <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/main/file_000000001c0071f581dfe6e2b4a25dd8.png" class="logo" alt="Logo Alcateia">
+<div class="container">
+  <h2>Login Equipe Alcateia</h2>
 
-  <h1>Performance Alcateia</h1>
-  <div class="frase">
-    “O verdadeiro lobo sabe: quem não vende, é caçado.”
-  </div>
-
-  <select id="vendedor" aria-label="Selecione seu nome">
+  <select id="vendedoresSelect">
     <option value="">Selecione seu nome</option>
   </select>
 
-  <button onclick="login()">Entrar</button>
+  <input type="text" id="novoVendedor" placeholder="Novo vendedor (digite e clique em Adicionar)" autocomplete="off"/>
 
-  <div class="add" onclick="toggleAdd()" role="button" tabindex="0" aria-pressed="false">+ adicionar vendedor</div>
+  <button id="btnAdicionar">Adicionar vendedor</button>
+  <button id="btnEntrar">Entrar</button>
 
-  <div id="addBox" class="hidden">
-    <input id="novoVendedor" placeholder="Nome do vendedor" aria-label="Nome do novo vendedor" />
-    <button onclick="adicionarVendedor()">Salvar</button>
-  </div>
-
-  <div id="erro" class="error" role="alert" aria-live="assertive"></div>
+  <div id="msg" style="color:#ff6666; margin-top:10px;"></div>
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
 
-// Carrega vendedores da API
-async function carregarVendedores() {
-  try {
-    const res = await fetch(API + "?acao=listarVendedores");
-    if (!res.ok) throw new Error("Falha ao carregar vendedores");
-    const data = await res.json();
+  const vendedoresSelect = document.getElementById("vendedoresSelect");
+  const novoVendedorInput = document.getElementById("novoVendedor");
+  const btnAdicionar = document.getElementById("btnAdicionar");
+  const btnEntrar = document.getElementById("btnEntrar");
+  const msg = document.getElementById("msg");
 
-    const select = document.getElementById("vendedor");
-    select.innerHTML = '<option value="">Selecione seu nome</option>';
-    data.forEach(v => {
-      const opt = document.createElement("option");
-      opt.value = v;
-      opt.textContent = v;
-      select.appendChild(opt);
-    });
-  } catch (error) {
-    console.error(error);
-    document.getElementById("erro").textContent = "Erro ao carregar vendedores.";
-  }
-}
-
-// Login - salva vendedor e redireciona
-function login() {
-  const vendedor = document.getElementById("vendedor").value;
-  if (!vendedor) {
-    document.getElementById("erro").textContent = "Selecione seu nome.";
-    return;
-  }
-  localStorage.setItem("vendedor", vendedor);
-  window.location.href = "painel.html";
-}
-
-// Mostra/esconde o campo para adicionar vendedor
-function toggleAdd() {
-  const addBox = document.getElementById("addBox");
-  addBox.classList.toggle("hidden");
-  document.getElementById("erro").textContent = "";
-  // Para acessibilidade, atualizar aria-pressed
-  const addBtn = document.querySelector(".add");
-  const pressed = addBox.classList.contains("hidden") ? "false" : "true";
-  addBtn.setAttribute("aria-pressed", pressed);
-}
-
-// Adiciona vendedor via POST
-async function adicionarVendedor() {
-  const nome = document.getElementById("novoVendedor").value.trim();
-  if (!nome) {
-    document.getElementById("erro").textContent = "Digite um nome válido.";
-    return;
-  }
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ acao: "adicionarVendedor", nome })
-    });
-    if (!res.ok) throw new Error("Erro na requisição");
-    const json = await res.json();
-    if(json.sucesso) {
-      await carregarVendedores();
-      toggleAdd();
-      document.getElementById("novoVendedor").value = "";
-      document.getElementById("erro").textContent = "Vendedor adicionado com sucesso!";
-    } else {
-      document.getElementById("erro").textContent = "Erro ao adicionar vendedor.";
+  async function carregarVendedores() {
+    try {
+      const res = await fetch(API_URL + "?acao=listarVendedores");
+      const data = await res.json();
+      vendedoresSelect.innerHTML = '<option value="">Selecione seu nome</option>';
+      data.forEach(v => {
+        const option = document.createElement("option");
+        option.value = v;
+        option.textContent = v;
+        vendedoresSelect.appendChild(option);
+      });
+    } catch (e) {
+      msg.textContent = "Erro ao carregar vendedores.";
     }
-  } catch (error) {
-    console.error(error);
-    document.getElementById("erro").textContent = "Erro ao conectar com o servidor.";
   }
-}
 
-carregarVendedores();
+  btnAdicionar.onclick = async () => {
+    const nome = novoVendedorInput.value.trim();
+    if (!nome) {
+      msg.textContent = "Digite um nome para adicionar.";
+      return;
+    }
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ acao: "adicionarVendedor", nome })
+      });
+      const json = await res.json();
+      if (json.sucesso) {
+        msg.style.color = "lightgreen";
+        msg.textContent = "Vendedor adicionado!";
+        novoVendedorInput.value = "";
+        carregarVendedores();
+      } else {
+        msg.style.color = "red";
+        msg.textContent = "Erro ao adicionar vendedor.";
+      }
+    } catch (e) {
+      msg.textContent = "Erro na conexão.";
+    }
+  };
+
+  btnEntrar.onclick = () => {
+    const vendedor = vendedoresSelect.value;
+    if (!vendedor) {
+      msg.style.color = "red";
+      msg.textContent = "Selecione seu nome para entrar.";
+      return;
+    }
+    localStorage.setItem("vendedor", vendedor);
+    window.location.href = "dashboard.html";
+  };
+
+  carregarVendedores();
 </script>
 
 </body>
