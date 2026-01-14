@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gestão Equipe Alcateia | Agendamento</title>
 
   <style>
@@ -121,18 +121,34 @@
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: #b29432;
     }
 
     .actions {
       display: flex;
       gap: 10px;
       margin-top: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .secondary {
       background: transparent;
       border: 1px solid rgba(255,255,255,0.15);
       color: var(--text);
+      width: auto;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .secondary:hover {
+      background: rgba(199, 162, 76, 0.2);
     }
 
     footer {
@@ -148,7 +164,7 @@
 
   <header>
     <div class="logo">
-      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png">
+      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png" alt="Logo Equipe Alcateia" />
       <span>Equipe Alcateia</span>
     </div>
     <div class="vendedor" id="vendedorNome"></div>
@@ -157,30 +173,30 @@
   <div class="container">
     <h2>Novo Agendamento</h2>
 
-    <label>Nome do cliente</label>
-    <input id="cliente">
+    <label for="cliente">Nome do cliente</label>
+    <input id="cliente" type="text" autocomplete="off" />
 
-    <label>Telefone</label>
-    <input id="telefone" inputmode="numeric">
+    <label for="telefone">Telefone</label>
+    <input id="telefone" type="tel" inputmode="numeric" autocomplete="off" />
 
-    <label>Bem desejado</label>
-    <input id="bem">
+    <label for="bem">Bem desejado</label>
+    <input id="bem" type="text" autocomplete="off" />
 
-    <label>Valor disponível</label>
-    <input id="valor" inputmode="numeric">
+    <label for="valor">Valor disponível</label>
+    <input id="valor" type="number" min="0" step="0.01" inputmode="decimal" autocomplete="off" />
 
     <div class="row">
       <div>
-        <label>Data da visita</label>
-        <input id="data" type="date">
+        <label for="data">Data da visita</label>
+        <input id="data" type="date" />
       </div>
       <div>
-        <label>Hora</label>
-        <input id="hora" type="time">
+        <label for="hora">Hora</label>
+        <input id="hora" type="time" />
       </div>
     </div>
 
-    <label>Status</label>
+    <label for="status">Status</label>
     <select id="status">
       <option>Pendente</option>
       <option>Realizado</option>
@@ -202,34 +218,79 @@
 
   <script>
     const vendedor = localStorage.getItem("vendedor");
-    if (!vendedor) location.href = "login.html";
-    document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
+    if (!vendedor) {
+      alert("Você precisa estar logado.");
+      window.location.href = "index.html";
+    } else {
+      document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
+    }
 
-    const API_URL = "COLE_AQUI_SEU_LINK_DO_APPS_SCRIPT";
+    // Coloque aqui seu link do Apps Script
+    const API_URL = "https://script.google.com/macros/s/AKfycbxkP2TGde192AW_4PGmRqDxB8JyNlU_tsEQqXl2pQCGNe6k3taOiiaDfJDY-8K29oNU2g/exec";
 
-    function salvar() {
+    function validarCampos(dados) {
+      if (!dados.cliente.trim()) {
+        alert("Preencha o nome do cliente.");
+        return false;
+      }
+      if (!dados.telefone.trim()) {
+        alert("Preencha o telefone.");
+        return false;
+      }
+      if (!dados.bem.trim()) {
+        alert("Preencha o bem desejado.");
+        return false;
+      }
+      if (!dados.valor || Number(dados.valor) <= 0) {
+        alert("Informe um valor disponível válido.");
+        return false;
+      }
+      if (!dados.data) {
+        alert("Selecione a data da visita.");
+        return false;
+      }
+      if (!dados.hora) {
+        alert("Selecione a hora da visita.");
+        return false;
+      }
+      return true;
+    }
+
+    async function salvar() {
       const dados = {
         vendedor,
-        cliente: cliente.value,
-        telefone: telefone.value,
-        bem: bem.value,
-        valor: valor.value,
-        data: data.value,
-        hora: hora.value,
-        status: status.value
+        cliente: document.getElementById("cliente").value.trim(),
+        telefone: document.getElementById("telefone").value.trim(),
+        bem: document.getElementById("bem").value.trim(),
+        valor: document.getElementById("valor").value.trim(),
+        data: document.getElementById("data").value,
+        hora: document.getElementById("hora").value,
+        status: document.getElementById("status").value
       };
 
-      fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify(dados)
-      })
-      .then(() => {
-        alert("Agendamento salvo!");
+      if (!validarCampos(dados)) return;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(dados)
+        });
+
+        if (!res.ok) throw new Error("Erro ao salvar agendamento");
+
+        alert("Agendamento salvo com sucesso!");
+        // Limpar campos
         document.querySelectorAll("input").forEach(i => i.value = "");
-      })
-      .catch(() => alert("Erro ao salvar"));
+        document.getElementById("status").value = "Pendente";
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao salvar o agendamento. Tente novamente.");
+      }
     }
   </script>
 
 </body>
-                        </html>
+      </html>
