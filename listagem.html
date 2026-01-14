@@ -1,1 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão Equipe Alcateia | Listagem</title>
 
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #111827;
+      --gold: #c7a24c;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #05070b, #0b0f14);
+      color: var(--text);
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 42px;
+    }
+
+    .logo span {
+      font-size: 0.9rem;
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .vendedor {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    select, button {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--gold);
+      color: #020617;
+      border: none;
+      font-weight: 600;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .lista {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      display: grid;
+      gap: 6px;
+    }
+
+    .linha {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .linha span {
+      color: var(--muted);
+    }
+
+    .linha strong {
+      color: var(--text);
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .status {
+      margin-top: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/marceloemanoel82-svg/Performance-alcateia/350796ad6131f2e5fe5f5e0a1eab8ac93265309a/file_000000001c0071f581dfe6e2b4a25dd8.png">
+      <span>Equipe Alcateia</span>
+    </div>
+    <div class="vendedor" id="vendedorNome"></div>
+  </header>
+
+  <div class="top-actions">
+    <select id="filtroStatus" onchange="carregar()">
+      <option value="">Todos status</option>
+      <option>Pendente</option>
+      <option>Realizado</option>
+      <option>Remarcou</option>
+      <option>Não compareceu</option>
+    </select>
+
+    <button class="secondary" onclick="location.href='painel.html'">
+      Voltar ao painel
+    </button>
+  </div>
+
+  <div class="lista" id="lista"></div>
+
+  <footer>
+    Gestão • Processo • Performance
+  </footer>
+
+  <script>
+    const vendedor = localStorage.getItem("vendedor");
+    if (!vendedor) location.href = "index.html";
+    document.getElementById("vendedorNome").innerText = "Vendedor: " + vendedor;
+
+    const API_URL = "COLE_AQUI_SEU_LINK_DO_APPS_SCRIPT";
+
+    function carregar() {
+      const statusFiltro = document.getElementById("filtroStatus").value;
+
+      fetch(API_URL)
+        .then(r => r.json())
+        .then(dados => {
+          const lista = document.getElementById("lista");
+          lista.innerHTML = "";
+
+          dados
+            .filter(item => !statusFiltro || item.status === statusFiltro)
+            .forEach(item => {
+              const card = document.createElement("div");
+              card.className = "card";
+
+              card.innerHTML = `
+                <div class="linha"><span>Cliente</span><strong>${item.cliente}</strong></div>
+                <div class="linha"><span>Telefone</span><strong>${item.telefone}</strong></div>
+                <div class="linha"><span>Bem</span><strong>${item.bem}</strong></div>
+                <div class="linha"><span>Valor</span><strong>${item.valor}</strong></div>
+                <div class="linha"><span>Data</span><strong>${item.data} ${item.hora}</strong></div>
+                <div class="linha"><span>Vendedor</span><strong>${item.vendedor}</strong></div>
+
+                <div class="status">
+                  <select onchange="atualizarStatus('${item.id}', this.value)">
+                    <option ${item.status==="Pendente"?"selected":""}>Pendente</option>
+                    <option ${item.status==="Realizado"?"selected":""}>Realizado</option>
+                    <option ${item.status==="Remarcou"?"selected":""}>Remarcou</option>
+                    <option ${item.status==="Não compareceu"?"selected":""}>Não compareceu</option>
+                  </select>
+                </div>
+              `;
+              lista.appendChild(card);
+            });
+        });
+    }
+
+    function atualizarStatus(id, status) {
+      fetch(API_URL, {
+        method: "PUT",
+        body: JSON.stringify({ id, status })
+      });
+    }
+
+    carregar();
+  </script>
+
+</body>
+</html>
